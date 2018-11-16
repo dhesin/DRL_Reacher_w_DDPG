@@ -1,7 +1,7 @@
 ## Deep_Reinforcement_Learning_Udacity_Reacher_One_Agent
 
 
-This project implements the Reacher Agent in Udacity provided environment. In this environment, a double-jointed arm can move to target locations. A reward of +0.1 is provided for each step that the agent's hand is in the goal location. Thus, the goal of the agent is to maintain its position at the target location for as many time steps as possible. The agent is considered to solve the problem when it is able to collect an average reward of +30 during last 100 episode.
+This project implements the Reacher Agent in Udacity provided environment with only one agent. In this environment, a double-jointed arm can move to target locations. A reward of +0.1 is provided for each step that the agent's hand is in the goal location. Thus, the goal of the agent is to maintain its position at the target location for as many time steps as possible. The agent is considered to solve the problem when it is able to collect an average reward of +30 during last 100 episode.
 
 The observation space consists of 33 variables corresponding to position, rotation, velocity, and angular velocities of the arm. Each action is a vector with four numbers, corresponding to torque applicable to two joints. Every entry in the action vector should be a number between -1 and 1.
 
@@ -21,4 +21,5 @@ After solving environment, model parameters are saved, agent is re-instantiated 
 Total score (averaged over agents) this episode: 35.67999920248985
 ```
 
+This project implements Version 1 of Reacher environment. Training with multiple agents should speed up the training due to more training samples and further de-correlation of samples. In addition, priority sampling, batch normalization should speed up the training.
 

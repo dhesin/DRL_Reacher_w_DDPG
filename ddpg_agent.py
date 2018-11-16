@@ -50,9 +50,9 @@ class Agent():
         self.noise = OUNoise(self.action_size, self.seed)
 
         # Replay memory
-        self.memory = ReplayBuffer(self.action_size, BUFFER_SIZE, BATCH_SIZE, self.seed)
+        #self.memory = ReplayBuffer(self.action_size, BUFFER_SIZE, BATCH_SIZE, self.seed)
         # Prioritized replay memory
-        #self.memory = NaivePrioritizedBuffer(BUFFER_SIZE, BATCH_SIZE, random_seed)
+        self.memory = NaivePrioritizedBuffer(BUFFER_SIZE, BATCH_SIZE, self.seed)
 
         if 'actor_chkpt_file' in kwargs and 'critic_chkpt_file' in kwargs:
             checkpoint_actor = torch.load(kwargs['actor_chkpt_file'])
@@ -96,7 +96,7 @@ class Agent():
             experiences (Tuple[torch.Tensor]): tuple of (s, a, r, s', done) tuples 
             gamma (float): discount factor
         """
-        states, actions, rewards, next_states, dones = experiences
+        states, actions, rewards, next_states, dones, indices, weights = experiences
 
         # ---------------------------- update critic ---------------------------- #
         # Get predicted next-state actions and Q values from target models
@@ -106,24 +106,21 @@ class Agent():
         Q_targets = rewards + (gamma * Q_targets_next * (1 - dones))
         # Compute critic loss
         Q_expected = self.critic_local(states, actions)
-        critic_loss = F.mse_loss(Q_expected, Q_targets)
+        #critic_loss = F.mse_loss(Q_expected, Q_targets)     
         
-        
-        
-        
-        #weights_tensor = torch.tensor(weights)
+        weights_tensor = torch.tensor(weights)
         #print(weights)
         #print(weights_tensor)
         
-        #critic_loss  = (Q_targets - Q_expected).pow(2) * weights_tensor
+        critic_loss  = (Q_targets - Q_expected).pow(2) * weights_tensor
         #critic_loss  = (Q_targets - Q_expected).pow(2)
-        #prios = critic_loss + 1e-5
-        #critic_loss  = critic_loss.mean()
+        prios = critic_loss + 1e-5
+        critic_loss  = critic_loss.mean()
         
         # Minimize the loss
         self.critic_optimizer.zero_grad()
         critic_loss.backward()
-        #self.memory.update_priorities(indices, prios.data.cpu().numpy())
+        self.memory.update_priorities(indices, prios.data.cpu().numpy())
         self.critic_optimizer.step()
 
         # ---------------------------- update actor ---------------------------- #
