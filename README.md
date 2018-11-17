@@ -16,7 +16,8 @@ Following files exist in the project;
 - Continuous_Control.ipynb : Python Jupyter notebook that runs the main training loop and then trained agent.
 - ddpg_agent.py        	   : DDPG implementation of the agent that interacts with environment. 
 - model.py                 : Implementation of the FCN. 
-- checkpoint_last.pth      : Saved model parameters.
+- checkpoint_actor.pth     : Saved model parameters for actor.
+- checkpoint_critic.pth    : Saved model parameters for critic.
 
 
 ### Getting Started
@@ -59,7 +60,7 @@ python -m ipykernel install --user --name drlnd --display-name "drlnd"
         - Windows (64-bit): [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P2/Reacher/one_agent/Reacher_Windows_x86_64.zip)
 
 
-6. Clone the repository at https://github.com/dhesin/DRL_Continuous_Control and move to the DRL_Continuous_Control directory
+6. Clone the repository at https://github.com/dhesin/DRL_Reacher_w_DDPG and move to the DRL_Reacher_w_DDPG directory
 
 7. From the command line terminal run ```jupyter notebook``` and select Continuous_Control.ipynb
 
